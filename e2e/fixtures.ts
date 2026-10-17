@@ -38,6 +38,7 @@ export async function mockApi(
     version: 0,
     refreshes: 0,
     adminReads: 0,
+    deniedAdminRequests: 0,
     meReads: 0,
     verificationCalls: 0,
     signup: null as Record<string, string> | null,
@@ -46,6 +47,7 @@ export async function mockApi(
     blockRefresh: null as Promise<void> | null,
   };
   const users = [{ ...admin }, { ...member }];
+  const signedInUser = options.role === 'USER' ? users[1] : users[0];
   const reply = (route: Route, status: number, body?: unknown) =>
     route.fulfill({
       status,
@@ -128,7 +130,7 @@ export async function mockApi(
     if (request.headers().authorization !== `Bearer token-${state.version}`)
       return fail(401, 'Expired access token');
     const current = {
-      ...(state.role === 'ADMIN' ? users[0] : users[1]),
+      ...signedInUser,
       role: state.role,
       pendingEmail: state.pendingEmail,
     };
@@ -181,7 +183,10 @@ export async function mockApi(
     if (path.startsWith('/api/auth/sessions/')) return reply(route, 204);
     if (path.startsWith('/api/admin/')) {
       state.adminReads++;
-      if (state.role !== 'ADMIN') return fail(403, 'Forbidden');
+      if (state.role !== 'ADMIN') {
+        state.deniedAdminRequests++;
+        return fail(403, 'Forbidden');
+      }
     }
     const page = (items: unknown[]) => {
       const size = Number(url.searchParams.get('size') ?? 10);
@@ -254,7 +259,7 @@ export async function mockApi(
       }
       if (method === 'PATCH') {
         Object.assign(user, data());
-        if (user.id === adminId && data().role)
+        if (user.id === signedInUser.id && data().role)
           state.role = data().role as 'USER' | 'ADMIN';
       }
       return reply(route, 200, user);

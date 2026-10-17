@@ -34,7 +34,7 @@
   font-size: 0.6rem;
   letter-spacing: 0.12em;
   font-weight: 750;
-  color: #83938c;
+  color: var(--muted);
   padding: 0 14px;
   margin: 7px 0 14px;
 }
@@ -44,7 +44,7 @@
   gap: 12px;
   padding: 12px 14px;
   border-radius: 8px;
-  color: #697b73;
+  color: var(--muted);
   text-decoration: none;
   font-size: 0.82rem;
   font-weight: 550;
@@ -163,7 +163,7 @@
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  color: #647770;
+  color: var(--muted);
   font-size: 0.64rem;
 }
 .mobileMenu,

@@ -6,8 +6,8 @@ import {
   Outlet,
   useLocation,
   useRouteError,
-  RouterProvider,
 } from 'react-router';
+import { RouterProvider } from 'react-router/dom';
 import { useAuth } from '../shared/auth/useAuth';
 import { Button, Card, ErrorState, LoadingState, Notice } from '../shared/ui';
 import { WorkspaceLayout } from './WorkspaceLayout';

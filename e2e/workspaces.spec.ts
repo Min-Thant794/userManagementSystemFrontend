@@ -50,11 +50,11 @@ test('cookie bootstrap restores a protected page on reload', async ({
   await mockApi(context, { signedIn: true });
   await page.goto(`/admin/users/${memberId}`);
   await expect(
-    page.getByRole('heading', { name: 'alex_chen', exact: true }),
+    page.getByRole('heading', { level: 1, name: 'alex_chen', exact: true }),
   ).toBeVisible();
   await page.reload();
   await expect(
-    page.getByRole('heading', { name: 'alex_chen', exact: true }),
+    page.getByRole('heading', { level: 1, name: 'alex_chen', exact: true }),
   ).toBeVisible();
 });
 test('wrong current password stays local and never triggers refresh', async ({
@@ -114,14 +114,21 @@ test('self-demotion removes the administrator workspace', async ({
   page,
   context,
 }) => {
-  await mockApi(context, { signedIn: true });
+  const state = await mockApi(context, { signedIn: true });
   await page.goto(`/admin/users/${adminId}`);
   await page.getByRole('button', { name: 'Change to member' }).click();
   await page.getByRole('button', { name: 'Confirm change' }).click();
   await expect(page).toHaveURL(/\/account$/);
+  await expect(
+    page.getByRole('heading', { name: 'Welcome, min_admin.', exact: true }),
+  ).toBeVisible();
   await expect(page.getByRole('link', { name: 'User directory' })).toHaveCount(
     0,
   );
+  await expect(
+    page.getByRole('link', { name: 'Admin workspace', exact: true }),
+  ).toHaveCount(0);
+  expect(state.deniedAdminRequests).toBe(0);
 });
 test('pending email remains separate from the current email', async ({
   page,

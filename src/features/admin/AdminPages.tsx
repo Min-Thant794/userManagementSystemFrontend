@@ -747,15 +747,15 @@ export function UserDetail() {
             setFailure(null);
             try {
               const result = await changeAccess(id, change.kind, change.value);
-              client.setQueryData([...scope, 'user', id], result);
-              await client.invalidateQueries({ queryKey: scope });
               if (self) {
                 await client.cancelQueries({ queryKey: scope });
+                // Leave the admin route before reloading permissions changes its guard.
+                await navigate('/account', { replace: true, flushSync: true });
                 client.removeQueries({ queryKey: scope });
-                const me = await auth.reloadUser();
-                if (!me) navigate('/login', { replace: true });
-                else if (me.role !== 'ADMIN')
-                  navigate('/account', { replace: true });
+                await auth.reloadUser();
+              } else {
+                client.setQueryData([...scope, 'user', id], result);
+                await client.invalidateQueries({ queryKey: scope });
               }
               setChange(null);
             } catch (error) {
