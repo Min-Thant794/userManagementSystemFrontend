@@ -127,6 +127,7 @@ small {
   text-decoration: none;
 }
 .table-scroll {
+  position: relative;
   overflow: auto;
   max-width: 100%;
 }

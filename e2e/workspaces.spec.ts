@@ -182,6 +182,9 @@ test('mobile layout and critical accessibility checks', async ({
   await expect(
     page.getByRole('heading', { name: 'User directory' }),
   ).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: 'min_admin', exact: true }),
+  ).toBeVisible();
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
