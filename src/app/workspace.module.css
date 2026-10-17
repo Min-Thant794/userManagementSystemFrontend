@@ -1,0 +1,254 @@
+.workspace {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+}
+.sidebar {
+  background: #fff;
+  border-right: 1px solid var(--line);
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 240px;
+  padding: 32px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  z-index: 30;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #075b54;
+  padding: 0 12px 36px;
+  font-weight: 800;
+  font-size: 1.45rem;
+}
+.brand small {
+  display: block;
+  font-size: 0.51rem;
+  letter-spacing: 0.22em;
+  margin-top: 3px;
+  color: var(--muted);
+}
+.workspaceLabel {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  font-weight: 750;
+  color: #83938c;
+  padding: 0 14px;
+  margin: 7px 0 14px;
+}
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: #697b73;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 550;
+  margin-bottom: 5px;
+}
+.navLink:hover {
+  background: var(--wash);
+  color: var(--accent);
+}
+.active {
+  background: #e8f4ee;
+  color: #096d5e;
+  font-weight: 700;
+}
+.sidebarBottom {
+  margin-top: auto;
+  padding-top: 30px;
+}
+.workspaceNote {
+  padding: 18px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fafcf9;
+  margin-bottom: 20px;
+}
+.workspaceNote > svg {
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.workspaceNote strong {
+  display: block;
+  font-size: 0.75rem;
+}
+.workspaceNote p {
+  color: var(--muted);
+  font-size: 0.7rem;
+  margin: 7px 0 0;
+}
+.switcher,
+.signOut {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  width: 100%;
+  padding: 12px 14px;
+  background: transparent;
+  border: 0;
+  text-decoration: none;
+  font-size: 0.76rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+.switcher svg:last-child {
+  margin-left: auto;
+}
+.main {
+  grid-column: 2;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.topbar {
+  height: 80px;
+  border-bottom: 1px solid var(--line);
+  background: #ffffffd9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 36px;
+  gap: 16px;
+}
+.breadcrumb {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.breadcrumb span {
+  color: #bcc7c1;
+  margin: 0 14px;
+}
+.breadcrumb strong {
+  color: #435c51;
+  font-weight: 550;
+}
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.identity > div {
+  text-align: right;
+}
+.identity strong {
+  display: block;
+  font-size: 0.78rem;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.identity small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.65rem;
+  margin-top: 4px;
+}
+.content {
+  padding: 36px;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  flex: 1;
+}
+.footer {
+  padding: 22px 36px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #647770;
+  font-size: 0.64rem;
+}
+.mobileMenu,
+.mobileClose {
+  display: none;
+}
+.backdrop {
+  display: none;
+}
+@media (min-width: 1600px) {
+  .content {
+    padding: 46px;
+  }
+}
+@media (max-width: 1050px) {
+  .workspace {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+  .sidebar {
+    width: 210px;
+    padding: 24px 14px;
+  }
+  .content {
+    padding: 26px;
+  }
+  .topbar {
+    padding: 0 26px;
+  }
+  .workspaceNote {
+    display: none;
+  }
+}
+@media (max-width: 800px) {
+  .workspace {
+    display: block;
+  }
+  .sidebar {
+    transform: translateX(-100%);
+    width: 250px;
+    transition: transform 0.18s;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .main {
+    width: 100%;
+  }
+  .topbar {
+    height: 68px;
+    padding: 0 18px;
+  }
+  .content {
+    padding: 24px 18px;
+  }
+  .mobileMenu,
+  .mobileClose {
+    display: inline-flex;
+  }
+  .mobileClose {
+    margin-left: auto;
+    padding: 8px;
+  }
+  .brand {
+    padding-left: 9px;
+  }
+  .backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    border: 0;
+    background: #162b2680;
+    z-index: 25;
+  }
+  .footer {
+    padding: 20px 18px;
+  }
+  .breadcrumb {
+    display: none;
+  }
+  .identity > div {
+    max-width: 140px;
+  }
+}
+@media (max-width: 400px) {
+  .footer span {
+    display: none;
+  }
+}
